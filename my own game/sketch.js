@@ -5,12 +5,10 @@ const Body= Matter.Body;
 
 
 var horizontalborder,horizontalmedium,horizontalsmall,horizontalverysmall,verticalborder,verticalmedium,verticalsmall,verticalverysmall
-var maize1a,maize2,maize3,maize4;
+var maize1,maize2,maize3,maize4;
 var gemsGroup,maizeGroup;
 var score=0;
 var gameState="play";
-var protecter,protecter2,protecter3;
-
 
 
 
@@ -44,8 +42,10 @@ points=loadSound("sounds/pointssound.mp3");
 //energy=loadSound("sounds/sound on getting energy bar.mp3");
 //hit=loadSound("sounds/ghosthitsound.mp3");
 sadface=loadImage("sademoji.png");
-happyface=loadImage("happyemoji.png")
-reset=loadImage("resetbutton.jpg")
+happyface=loadImage("happyemoji.png");
+reset=loadImage("resetbutton.jpg");
+righthand=loadImage("right hand.png");
+backgroundmusic=loadSound("backgroundsound.mp3")
 }
 
 function setup(){
@@ -53,8 +53,6 @@ function setup(){
 
     engine=Engine.create();
     world=engine.world;
-
-  
 
     gemsGroup=new Group();
     maizeGroup=new Group();
@@ -245,10 +243,12 @@ maize27.body.addImage("27",verticalborder);
 maize27.body.scale=1.1
 maizeGroup.add(maize27.body);
 
+/*
 maize28=new Maize(130,170,10,10);
 maize28.body.addImage("28",horizontalverysmall);
 maize28.body.scale=1.1
 maizeGroup.add(maize28.body);
+*/
 
 maize29=new Maize(60,294,10,10);
 maize29.body.addImage("29",horizontalverysmall);
@@ -266,13 +266,13 @@ theif.body.scale=0.7
 //theif.body.debug=true;
 theif.body.setCollider("rectangle",0,0,55,55);
 
+
 protecter=new King(60,234,10,10);
 protecter.body.addImage("Kg",king);
 protecter.body.scale=0.2
 protecter.body.velocityX=3;
 //protecter.body.debug=true
 protecter.body.setCollider("rectangle",0,0,110,110)
-
 
 protecter2=new King(120,345,10,10);
 protecter2.body.addImage("Kg",king2);
@@ -282,7 +282,6 @@ protecter2.body.velocityY=7
 // protecter2.body.debug=true
 protecter2.body.setCollider("rectangle",0,0,110,110)
 
-
 protecter3=new King(55,486,10,10);
 protecter3.body.addImage("Kg",king);
 protecter3.body.scale=0.2
@@ -290,7 +289,6 @@ protecter3.body.velocityX=6
 protecter3.body.velocityY=-6
 // protecter3.body.debug=true
 protecter3.body.setCollider("rectangle",0,0,110,110)
-
 /*
 protecter4=new King(694,714,10,10);
 protecter4.body.addImage("Kg",king2);
@@ -301,28 +299,13 @@ protecter4.body.velocityY=-5
 protecter4.body.setCollider("rectangle",0,0,110,110)
 */
 
-sad=new Face(500,200,10,10);
-sad.body.addImage("s",sadface)
-sad.body.scale=0.4
-sad.body.visible=false
-
-replay=new Face(475,550,10,10);
-replay.body.addImage("r",reset);
-replay.body.scale=0.1
-replay.body.visible=false
-
-happy=new Face(420,200,10,10);
-happy.body.addImage("s",happyface)
-happy.body.scale=0.4
-happy.body.visible=false
-
 // middle obstacle
-obstacle1=new Barrier(170,267,40,800);
+obstacle1=new Barrier(170,267,30,460);
 obstacle1.body.visible=false
 //obstacle1.body.debug=true
 
 // right obstacle
-obstacle2=new Barrier(780,405,40,810);
+obstacle2=new Barrier(787,405,40,810);
 obstacle2.body.visible=false
 //obstacle2.body.debug=true
 
@@ -340,6 +323,68 @@ obstacle4.body.visible=false
 obstacle5=new Barrier(380,20,800,40);
 obstacle5.body.visible=false
 //obstacle5.body.debug=true
+
+obstacle6=new Barrier(444,240,300,10);
+obstacle6.body.visible=false
+
+obstacle7=new Barrier(315,137,30,200);
+obstacle7.body.visible=false
+
+obstacle8=new Barrier(470,327,365,30);
+obstacle8.body.visible=false
+
+obstacle9=new Barrier(451,387,409,30);
+obstacle9.body.visible=false
+
+obstacle10=new Barrier(580,105,30,130);
+obstacle10.body.visible=false
+
+obstacle11=new Barrier(445,536,30,130);
+obstacle11.body.visible=false
+
+obstacle12=new Barrier(352,490,200,20);
+obstacle12.body.visible=false
+
+obstacle13=new Barrier(263,439,30,100);
+obstacle13.body.visible=false
+
+obstacle14=new Barrier(658,550,227,30);
+obstacle14.body.visible=false
+
+obstacle15=new Barrier(653,470,227,30);
+obstacle15.body.visible=false
+
+obstacle16=new Barrier(682,142,30,150);
+obstacle16.body.visible=false
+
+obstacle17=new Barrier(120,663,227,30);
+obstacle17.body.visible=false
+
+obstacle18=new Barrier(332,682,210,30);
+obstacle18.body.visible=false
+
+obstacle19=new Barrier(327,595,210,30);
+obstacle19.body.visible=false
+
+obstacle20=new Barrier(225,631,30,80);
+obstacle20.body.visible=false
+
+obstacle21=new Barrier(560,522,30,80);
+obstacle21.body.visible=false
+
+obstacle22=new Barrier(130,395,70,30);
+obstacle22.body.visible=false
+
+//protected area for the theif(vertical)
+obstacle23=new Barrier(640,711,30,130);
+obstacle23.body.visible=false
+
+//protected area for the theif (horizontal)
+obstacle24=new Barrier(710,632,150,30);
+obstacle24.body.visible=false
+
+obstacle25=new Barrier(60,290,70,30);
+obstacle25.body.visible=false
 
 
 gem1=new Gem(260,732,10,10);
@@ -595,12 +640,17 @@ gemdebug.body.debug=true;
 }
 */
 
+
 if (keyCode===UP_ARROW){
   theif.velocityX=0;
   theif.velocityY=3;
   theif.body.addImage("t",north);
 }
 
+
+if (gameState==="play"){
+  backgroundmusic.play();
+}
 // if (theif.body.isTouching(gem1)){
 //  gem1.destroy();    
 //   }
@@ -613,11 +663,9 @@ function draw(){
  
   background(0,0,0)
  Engine.update(engine);
-//text(mouseX+","+mouseY,mouseX,mouseY)
+text(mouseX+","+mouseY,mouseX,mouseY)
 
 if(gameState==="play"){
-
-
 
   fill("yellow")
   stroke(20);
@@ -625,14 +673,23 @@ if(gameState==="play"){
   text("Score:"+score,820,400);
   fill(97,224,252)
   textSize(19)
-  text("Collect All The Gems",805,172);
+  text("Collect All The Gems!",805,172);
   fill(192,192,192)
+  textSize(15);
+  text("Protection!",676,715);
+  fill(108,244,234);
   textSize(22);
-  text("It is protected here",805,689)
+text("Instructions:",840,569);
+fill(255,128,0)
+textSize(18)
+text("Use the arrow keys",815,610);
+text("to move the theif",815,632)
+
+  
 
 if (keyIsDown(UP_ARROW)){
   theif.body.velocityX=0;
-  theif.body.velocityY=-7;
+  theif.body.velocityY=-8;
   theif.body.addImage("t",north);
 }else{
 theif.body.velocityX=0;
@@ -642,19 +699,19 @@ theif.body.addImage("t",east)
 
 if (keyIsDown(DOWN_ARROW)){
   theif.body.velocityX=0;
-  theif.body.velocityY=7;
+  theif.body.velocityY=8;
   theif.body.addImage("t",south);
 }
 
 
 if (keyIsDown(LEFT_ARROW)){
-  theif.body.velocityX=-7;
+  theif.body.velocityX=-8;
   theif.body.velocityY=0;
   theif.body.addImage("t",west);
 }
 
 if (keyIsDown(RIGHT_ARROW)){
-  theif.body.velocityX=7;
+  theif.body.velocityX=8;
   theif.body.velocityY=0;
   theif.body.addImage("t",east);
 }
@@ -674,15 +731,126 @@ points.play();
 protecter.body.bounceOff(obstacle1.body);
 protecter.body.bounceOff(obstacle4.body);
 protecter2.body.bounceOff(obstacle1.body);
-protecter2.body.bounceOff(obstacle4.body);
+//protecter2.body.bounceOff(obstacle4.body);
 protecter2.body.bounceOff(obstacle2.body);
 protecter2.body.bounceOff(obstacle3.body);
+protecter2.body.bounceOff(obstacle4.body);
 protecter2.body.bounceOff(obstacle5.body);
-protecter3.body.bounceOff(obstacle1.body);
-protecter3.body.bounceOff(obstacle4.body);
+//protecter3.body.bounceOff(obstacle4.body);
+protecter3.body.bounceOff(obstacle1.body)
 protecter3.body.bounceOff(obstacle2.body);
 protecter3.body.bounceOff(obstacle3.body);
+protecter3.body.bounceOff(obstacle4.body);
 protecter3.body.bounceOff(obstacle5.body);
+
+protecter2.body.bounceOff(obstacle6.body);
+protecter3.body.bounceOff(obstacle6.body);
+
+
+protecter2.body.bounceOff(obstacle7.body);
+protecter3.body.bounceOff(obstacle7.body);
+
+
+protecter2.body.bounceOff(obstacle8.body);
+protecter3.body.bounceOff(obstacle8.body);
+
+
+protecter2.body.bounceOff(obstacle9.body);
+protecter3.body.bounceOff(obstacle9.body);
+
+
+protecter2.body.bounceOff(obstacle10.body);
+protecter3.body.bounceOff(obstacle10.body);
+
+
+protecter2.body.bounceOff(obstacle11.body);
+protecter3.body.bounceOff(obstacle11.body);
+
+
+protecter2.body.bounceOff(obstacle12.body);
+protecter3.body.bounceOff(obstacle12.body);
+
+
+protecter2.body.bounceOff(obstacle13.body);
+protecter3.body.bounceOff(obstacle13.body);
+
+
+protecter2.body.bounceOff(obstacle14.body);
+protecter3.body.bounceOff(obstacle14.body);
+
+
+protecter2.body.bounceOff(obstacle15.body);
+protecter3.body.bounceOff(obstacle15.body);
+
+
+protecter2.body.bounceOff(obstacle16.body);
+protecter3.body.bounceOff(obstacle16.body);
+
+
+protecter2.body.bounceOff(obstacle17.body);
+protecter3.body.bounceOff(obstacle17.body);
+
+
+protecter2.body.bounceOff(obstacle18.body);
+protecter3.body.bounceOff(obstacle18.body);
+
+
+protecter2.body.bounceOff(obstacle19.body);
+protecter3.body.bounceOff(obstacle19.body);
+
+
+protecter2.body.bounceOff(obstacle20.body);
+protecter3.body.bounceOff(obstacle20.body);
+
+
+protecter2.body.bounceOff(obstacle21.body);
+protecter3.body.bounceOff(obstacle21.body);
+
+
+protecter2.body.bounceOff(obstacle22.body);
+protecter3.body.bounceOff(obstacle22.body);
+
+
+protecter2.body.bounceOff(obstacle23.body);
+protecter3.body.bounceOff(obstacle23.body);
+
+
+protecter2.body.bounceOff(obstacle24.body);
+protecter3.body.bounceOff(obstacle24.body);
+
+protecter2.body.bounceOff(obstacle25.body);
+protecter3.body.bounceOff(obstacle25.body);
+
+theif.body.collide(obstacle1.body);
+theif.body.collide(obstacle2.body);
+theif.body.collide(obstacle3.body);
+theif.body.collide(obstacle4.body);
+theif.body.collide(obstacle5.body);
+theif.body.collide(obstacle6.body);
+theif.body.collide(obstacle7.body);
+theif.body.collide(obstacle8.body);
+theif.body.collide(obstacle9.body);
+theif.body.collide(obstacle10.body);
+theif.body.collide(obstacle11.body);
+theif.body.collide(obstacle12.body);
+theif.body.collide(obstacle13.body);
+theif.body.collide(obstacle14.body);
+theif.body.collide(obstacle15.body);
+theif.body.collide(obstacle16.body);
+theif.body.collide(obstacle17.body);
+theif.body.collide(obstacle18.body);
+theif.body.collide(obstacle19.body);
+theif.body.collide(obstacle20.body);
+theif.body.collide(obstacle21.body);
+theif.body.collide(obstacle22.body);
+//theif.body.collide(obstacle23.body);
+//theif.body.collide(obstacle24.body);
+theif.body.collide(obstacle25.body);
+
+
+
+
+
 /*
 protecter4.body.bounceOff(obstacle1.body);
 protecter4.body.bounceOff(obstacle4.body);
@@ -692,10 +860,8 @@ protecter4.body.bounceOff(obstacle5.body);
 */
 
 if(score===470){
-
-
-winning.play();
 gameState="win"
+winning.play();
 }
 if(protecter2.body.isTouching(theif.body)){
 loosing.play();
@@ -715,61 +881,59 @@ loosing.play();
 
   }
 
+
 else if(gameState==="end"){
-
+    protecter.body.destroy();
+    protecter2.body.destroy();
+    protecter3.body.destroy();
    // protecter4.body.destroy();
     score=0
-    gemsGroup.setVisibleEach(false)
-    maizeGroup.setVisibleEach(false);
-    theif.body.visible=false
-    protecter.body.visible=false
-    protecter2.body.visible=false
-    protecter3.body.visible=false
-    sad.body.visible=true
-    replay.body.visible=true
-    
-  if(mousePressedOver(replay.body)){
-     
-   gameState="play"
-   protecter.body.visible=true
-   protecter2.body.visible=true
-   protecter3.body.visible=true
-   sad.body.visible=false
-   replay.body.visible=false
-     gemsGroup.setVisibleEach(true);
-     maizeGroup.setVisibleEach(true);
-     theif.body.visible=true
-   
- 
-      }
-
-
-
+    gemsGroup.destroyEach();
+    maizeGroup.destroyEach();
+    theif.body.destroy();
+    sad=new Face(500,200,10,10);
+    sad.body.addImage("s",sadface)
+    sad.body.scale=0.5
+   /* replay=new Face(475,550,10,10);
+    replay.body.addImage("r",reset);
+    replay.body.scale=0.1*/
+    hand=new Face(737,736,10,10);
+    hand.body.addImage("s",righthand);
+    hand.body.scale=0.2
     fill("red");
-    textSize(70);
-text("You Loose",320,400);
-  }
-  
-  else if(gameState==="win"){
-    score=0
-    gemsGroup.setVisibleEach(false);
-    maizeGroup.setvisibleEach(false);
-    theif.body.visible=false
-
-    fill("green");
-    textSize(70);
-    text("You Win",320,400)
-    happy.body.visible=true
-    replay.body.visible=true
-    protecter.body.visible=false
-    protecter2.body.visible=false
-    protecter3.body.visible=false
+    textSize(80);
+text("You Loose!",320,450);
+fill(241,232,9)
+textSize(20)
+text("Reload the page to ",814,719)
+text("restart the game",814,749)
+backgroundmusic.pause();
+  }else if(gameState==="win"){
+    protecter.body.destroy();
+    protecter2.body.destroy();
+    protecter3.body.destroy();
    // protecter4.body.destroy();
-
-
-
-  // winning.play();
+    score=0
+    gemsGroup.destroyEach();
+    maizeGroup.destroyEach();
+    theif.body.destroy();
+    happy=new Face(420,200,10,10);
+    happy.body.addImage("s",happyface)
+    happy.body.scale=0.5
+    hand=new Face(737,736,10,10);
+    hand.body.addImage("s",righthand);
+    hand.body.scale=0.2
+    fill(115,242,72);
+    textSize(80);
+    text("You Win!",320,450)
+    fill(241,232,9)
+textSize(20)
+text("Reload the page to ",814,719)
+text("restart the game",814,749);
+backgroundmusic.pause();
+   //winning.play();
   }
+
 
 
 
